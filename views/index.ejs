@@ -2,10 +2,51 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel='stylesheet' href='/stylesheets/style.css' />
+
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1>Check die regels hier:</h1>
+
+
+
+
+    <div class="rule">
+    	<div class="if">
+    		<!--<span class="if_text">IF</span>-->
+    		<div class="if_descr">
+    			<div>User is speaking</div>
+    		</div>
+    	</div>
+    	<div class="then">
+    		<div class="shot">
+    			<div>Some Shot here</div>
+    		</div>
+    		<div class="plusButton"><span class="glyphicon glyphicon-plus"></span></div>
+    	</div>
+    </div>
+
+    <div class="rule">
+    	<div class="if">
+    		<!--<span class="if_text">IF</span>-->
+    		<div class="if_descr">
+    			<div>Meeting and user have the same location</div>
+    		</div>
+    	</div>
+    	<div class="then">
+    		<div class="shot">
+    			<div>Some Shot here</div>
+    		</div>
+    		<div class="plusButton"><span class="glyphicon glyphicon-plus"></span></div>
+    	</div>
+    </div>
+
+
+    <script src="javascripts/main.js"></script>
+
+    <script src="vendor/fastclick.js"></script>
+    <script src="vendor/jquery-1.11.0.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

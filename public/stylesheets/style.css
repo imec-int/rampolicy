@@ -1,3 +1,11 @@
+*{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-decoration: none;
+	border-style: none;
+}
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -5,4 +13,87 @@ body {
 
 a {
   color: #00B7FF;
+}
+
+.rule{
+	background-color: #eee;
+	min-height: 120px;
+	margin-top: 20px;
+}
+
+.plusButton{
+	width: 36px;
+	height: 36px;
+	background-color: #BDC3C7;
+	border-radius: 3px;
+	cursor: pointer;
+	float: left;
+	position: relative;
+	top: 35px;
+}
+.plusButton span{
+	width: 100%;
+	font-size: 24px;
+	line-height: 32px;
+	color: #fff;
+	text-align: center;
+}
+
+.plusButton:hover{
+	background-color: #34495E;
+}
+
+.if{
+	float: left;
+	width: 19%;
+	margin-left: 1%;
+	height: 120px;
+	position: relative;
+	font-weight: 100;
+}
+.if_text{
+	line-height: 120px;
+	font-size: 30px
+}
+.if_descr{
+	height: 120px;
+	display: table;
+	overflow: hidden;
+	width: 100%;
+}
+.if_descr div{
+	font-size: 16px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.then{
+	background-color: #95A5A6;
+	min-height: 100px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	position: relative;
+	display: inline-block;
+	width: 78%;
+	margin-right: 2%;
+	overflow-x: scroll;
+}
+
+.shot{
+	height: 80px;
+	width: 100px;
+	background-color: #2C3E50;
+	margin: 10px;
+	float: left;
+	font-size: 12px;
+	color: #fff;
+	display: table;
+	overflow: hidden;
+}
+
+.shot div{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
 }
