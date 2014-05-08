@@ -57,15 +57,10 @@ a {
 }
 .if_descr{
 	height: 120px;
-	display: table;
-	overflow: hidden;
-	width: 100%;
+	width: 90%;
 }
 .if_descr div{
 	font-size: 16px;
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
 }
 
 .then{
@@ -88,11 +83,33 @@ a {
 	float: left;
 	font-size: 12px;
 	color: #fff;
+}
+
+.options{
+	height: 100px;
+}
+
+.option{
+	height: 80px;
+	width: 100px;
+	background-color: #7F8C8D;
+	margin: 10px;
+	float: left;
+	font-size: 12px;
+	color: #fff;
+	cursor: pointer;
+}
+
+.hide{
+	display: none;
+}
+
+.vac{
 	display: table;
 	overflow: hidden;
 }
 
-.shot div{
+.vac div{
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;

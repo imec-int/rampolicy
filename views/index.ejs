@@ -9,22 +9,32 @@
   <body>
     <h1>Check die regels hier:</h1>
 
+    <script>
+    	var allRules = <%- rules %>;
+    </script>
 
-
-    <% for(var i = 0; i < rules.length; i++) { %>
-	    <div class="rule" data-i="<%= i %>" id="<%= rules[i].id %>">
-	    	<div class="if">
+    <% myrules = JSON.parse(rules); %>
+    <% for(var i = 0; i < myrules.length; i++) { %>
+	    <div class="rule" data-i="<%= i %>" data-id="<%= myrules[i].id %>">
+	    	<div class="if" data-id="<%= myrules[i].antecedent.id %>">
 	    		<!--<span class="if_text">IF</span>-->
-	    		<div class="if_descr">
-	    			<div><%= rules[i].description %></div>
+	    		<div class="vac if_descr">
+	    			<div><%= myrules[i].description %></div>
 	    		</div>
 	    	</div>
-	    	<div class="then">
-	    		<div class="shot">
-	    			<div><%= rules[i].consequent.options[0].description %></div>
+	    	<div class="then" data-id="<%= myrules[i].consequent.id %>">
+	    		<div class="vac shot" data-id="<%= myrules[i].consequent.options[0].id %>">
+	    			<div><%= myrules[i].consequent.options[0].description %></div>
 	    		</div>
 	    		<div id="plus_<%= i %>" data-i="<%= i %>" class="plusButton"><span class="glyphicon glyphicon-plus"></span></div>
 	    	</div>
+	    </div>
+	    <div class="options" data-i="<%= i %>">
+	    	<% for(var j = 0; j < myrules[i].consequent.options.length; j++) { %>
+	    	<div class="vac option" data-j="<%= j %>">
+    			<div><%= myrules[i].consequent.options[j].description %></div>
+    		</div>
+	    	<% } %>
 	    </div>
 	<% } %>
 
