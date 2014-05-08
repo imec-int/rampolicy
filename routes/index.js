@@ -58,7 +58,7 @@ if(sampleRules && sampleRules.rules && sampleRules.rules.length > 0){
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Policy Editor' });
+  res.render('index', { title: 'Policy Editor' , rules: transformedRules});
 });
 
 module.exports = router;

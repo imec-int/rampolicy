@@ -7,5 +7,9 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <!-- log id and description of every rule for testing  -->
+    <% for(var i = 0; i < rules.length; i++) { %>
+    	<p><%= rules[i].id %>  <%= rules[i].description %>  <%= rules[i].consequent.options[0].description %></p>
+    <% } %>
   </body>
 </html>
