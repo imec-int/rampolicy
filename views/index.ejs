@@ -11,42 +11,28 @@
 
 
 
+    <% for(var i = 0; i < rules.length; i++) { %>
+	    <div class="rule" data-i="<%= i %>" id="<%= rules[i].id %>">
+	    	<div class="if">
+	    		<!--<span class="if_text">IF</span>-->
+	    		<div class="if_descr">
+	    			<div><%= rules[i].description %></div>
+	    		</div>
+	    	</div>
+	    	<div class="then">
+	    		<div class="shot">
+	    			<div><%= rules[i].consequent.options[0].description %></div>
+	    		</div>
+	    		<div id="plus_<%= i %>" data-i="<%= i %>" class="plusButton"><span class="glyphicon glyphicon-plus"></span></div>
+	    	</div>
+	    </div>
+	<% } %>
 
-    <div class="rule">
-    	<div class="if">
-    		<!--<span class="if_text">IF</span>-->
-    		<div class="if_descr">
-    			<div>User is speaking</div>
-    		</div>
-    	</div>
-    	<div class="then">
-    		<div class="shot">
-    			<div>Some Shot here</div>
-    		</div>
-    		<div class="plusButton"><span class="glyphicon glyphicon-plus"></span></div>
-    	</div>
-    </div>
-
-    <div class="rule">
-    	<div class="if">
-    		<!--<span class="if_text">IF</span>-->
-    		<div class="if_descr">
-    			<div>Meeting and user have the same location</div>
-    		</div>
-    	</div>
-    	<div class="then">
-    		<div class="shot">
-    			<div>Some Shot here</div>
-    		</div>
-    		<div class="plusButton"><span class="glyphicon glyphicon-plus"></span></div>
-    	</div>
-    </div>
-
-
-    <script src="javascripts/main.js"></script>
 
     <script src="vendor/fastclick.js"></script>
     <script src="vendor/jquery-1.11.0.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="javascripts/main.js"></script>
   </body>
 </html>
