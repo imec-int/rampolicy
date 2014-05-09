@@ -90,11 +90,11 @@ var PolicyEditor = function (options){
 		$(".rule").each(function(i, arule){
 			var ruleId = $(arule).attr('data-id');
 			// rule heeft maar 1 antec/conseq
-			var antecedentId = $(arule).children('.if').attr('data-id');
-			var consequent = $(arule).children('.then');
+			var antecedentId = $(arule).find('.if').attr('data-id');
+			var consequent = $(arule).find('.then');
 			var consequentId = consequent.attr('data-id');
 			var sequence = [];
-			consequent.children('.vac.shot').each(function(j, shot){
+			consequent.find('.vac.shot').each(function(j, shot){
 				sequence.push($(shot).attr('data-id'));
 			});
 			body.push({id: ruleId, antecedentId: antecedentId, consequentId: {id: consequentId, sequence: sequence}});
