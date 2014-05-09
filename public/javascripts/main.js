@@ -24,8 +24,8 @@ var PolicyEditor = function (options){
 
 		// console.log(".options[data-i="+rule_number+"]");
 		//show options
-		$(".options").hide();
-		$(".options[data-i="+rule_number+"]").show();
+		$(".options").hide({duration:200 });
+		$(".options[data-i="+rule_number+"]").show({duration:300 });
 		event.stopPropagation();
 	};
 
@@ -44,7 +44,7 @@ var PolicyEditor = function (options){
 		event.preventDefault();
 		console.log("clear things");
 		activeRuleOptions = 0;
-		$(".options").hide();
+		$(".options").hide({duration:200 });
 	};
 
 	var onSync = function(event){
