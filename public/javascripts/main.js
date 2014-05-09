@@ -11,6 +11,7 @@ var PolicyEditor = function (options){
 
 	var addHandlers = function () {
 		$('.plusButton').click( onPlus );
+		$('.syncButton').click( onSync );
 		$('.option').click( onAddOption );
 		$('body').click( onClearOptions );
 	};
@@ -44,6 +45,19 @@ var PolicyEditor = function (options){
 		console.log("clear things");
 		activeRuleOptions = 0;
 		$(".options").hide();
+	};
+
+	var onSync = function(event){
+		console.log("sync that shit");
+		event.preventDefault();
+		$('.syncButton').off("click");
+		TweenLite.to($(".syncButton .glyphicon"), 1.8, {rotation:720, ease:Elastic.easeOut, onComplete:resetSync});
+	};
+
+	var resetSync = function(event){
+		console.log("reset sync");
+		TweenLite.to($(".syncButton .glyphicon"), 0, {rotation:0});
+		$('.syncButton').click( onSync );
 	};
 
 	return {
