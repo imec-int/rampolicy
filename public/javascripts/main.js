@@ -51,6 +51,7 @@ var PolicyEditor = function (options){
 		console.log("sync that shit");
 		event.preventDefault();
 		$('.syncButton').off("click");
+		postRules();
 		TweenLite.to($(".syncButton .glyphicon"), 1.8, {rotation:720, ease:Elastic.easeOut, onComplete:resetSync});
 	};
 
@@ -95,5 +96,4 @@ var PolicyEditor = function (options){
 $(function(){
 	var app = new PolicyEditor();
 	app.init();
-	app.postRules();
 });
