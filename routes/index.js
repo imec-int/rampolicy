@@ -52,7 +52,7 @@ if(sampleRules && sampleRules.rules && sampleRules.rules.length > 0){
 		rule.consequent.options = options;
 		transformedRules.unshift(rule);
 	};
-	console.log(JSON.stringify(transformedRules));
+	// console.log(JSON.stringify(transformedRules));
 }
 
 
