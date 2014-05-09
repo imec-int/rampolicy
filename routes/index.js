@@ -61,6 +61,11 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Policy Editor' , rules: JSON.stringify(transformedRules)});
 });
 
+router.post('/rules', function(req, res){
+	console.log(JSON.stringify(req.body));
+	res.json({status: 0});
+})
+
 module.exports = router;
 
 
