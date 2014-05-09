@@ -12,6 +12,7 @@ var PolicyEditor = function (options){
 	var addHandlers = function () {
 		$('.plusButton').click( onPlus );
 		$('.syncButton').click( onSync );
+		$('.removeButton').click( onRemove );
 		$('.option').click( onAddOption );
 		$('body').click( onClearOptions );
 		//sortable
@@ -59,8 +60,15 @@ var PolicyEditor = function (options){
 		var options = allRules[activeRuleNumber].consequent.options;
 		console.log(".rule[data-i="+activeRuleNumber+"] shots");
 		// $("#"+activeRuleOptions).before("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div></li>");
-		$(".rule[data-i="+activeRuleNumber+"] .shots").append("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div></li>");
+		$(".rule[data-i="+activeRuleNumber+"] .shots").append("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div><a class='removeButton'><span class='glyphicon glyphicon-remove'></span></a></li>");
+		$('.removeButton').click( onRemove );
+		event.stopPropagation();
+	};
 
+	var onRemove = function (event){
+		event.preventDefault();
+		// console.log($(this).parent().remove());
+		$(this).parent().remove();
 		event.stopPropagation();
 	};
 

@@ -44,6 +44,24 @@ a {
 	background-color: #34495E;
 }
 
+.removeButton{
+	cursor: pointer;
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	color:  #FF9473;
+}
+.removeButton span{
+	width: 100%;
+	font-size: 16px;
+	line-height: 20px;
+	text-align: center;
+}
+
+.removeButton:hover{
+	color: #FFC5A3;
+}
+
 .syncButton{
 	height: 36px;
 	background-color: #BDC3C7;
@@ -113,6 +131,7 @@ a {
 	float: left;
 	font-size: 12px;
 	color: #fff;
+	position: relative;
 }
 
 .options{
