@@ -23,9 +23,11 @@
 	    		</div>
 	    	</div>
 	    	<div class="then" data-id="<%= myrules[i].consequent.id %>">
-	    		<div class="vac shot" data-id="<%= myrules[i].consequent.options[0].id %>">
-	    			<div><%= myrules[i].consequent.options[0].description %></div>
-	    		</div>
+	    		<ul class="shots">
+		    		<li class="vac shot" data-id="<%= myrules[i].consequent.options[0].id %>">
+		    			<div><%= myrules[i].consequent.options[0].description %></div>
+		    		</li>
+		    	</ul>
 	    		<div id="plus_<%= i %>" data-i="<%= i %>" class="plusButton"><span class="glyphicon glyphicon-plus"></span></div>
 	    	</div>
 	    </div>
@@ -43,6 +45,7 @@
 
     <script src="vendor/fastclick.js"></script>
     <script src="vendor/jquery-1.11.0.min.js"></script>
+    <script src="vendor/jquery-sortable-min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="vendor/gsap/TweenLite.min.js"></script>
 	<script src="vendor/gsap/easing/EasePack.min.js"></script>

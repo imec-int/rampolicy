@@ -29,7 +29,8 @@ a {
 	cursor: pointer;
 	float: left;
 	position: relative;
-	top: 35px;
+	top: 27px;
+	margin-left: 5px;
 }
 .plusButton span{
 	width: 100%;
@@ -143,3 +144,29 @@ a {
 	vertical-align: middle;
 	text-align: center;
 }
+
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+ul.shots li.placeholder {
+  position: relative;
+  /** More li styles **/
+}
+ul.shots li.placeholder:before {
+ 	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	border: 6px solid transparent;
+	border-top-color: #9FE1FF;
+	top: 4px;
+	margin-left: -5px;
+	border-bottom: none;
+}
+

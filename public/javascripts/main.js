@@ -14,6 +14,28 @@ var PolicyEditor = function (options){
 		$('.syncButton').click( onSync );
 		$('.option').click( onAddOption );
 		$('body').click( onClearOptions );
+		//sortable
+		$(".shots").sortable(
+			{
+			// set item relative to cursor position
+			onDragStart: function ($item, container, _super) {
+				var offset = $item.offset(),
+				pointer = container.rootGroup.pointer
+
+				adjustment = {
+				  left: pointer.left - offset.left,
+				  top: pointer.top - offset.top
+				}
+
+				_super($item, container)
+			},
+			onDrag: function ($item, position) {
+				$item.css({
+				  left: position.left - adjustment.left,
+				  top: position.top - adjustment.top
+				})
+				}
+			});
 	};
 
 	var onPlus = function (event){
@@ -35,8 +57,10 @@ var PolicyEditor = function (options){
 		// console.log("click on "+activeRuleOptions);
 
 		var options = allRules[activeRuleNumber].consequent.options;
+		console.log(".rule[data-i="+activeRuleNumber+"] shots");
+		// $("#"+activeRuleOptions).before("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div></li>");
+		$(".rule[data-i="+activeRuleNumber+"] .shots").append("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div></li>");
 
-		$("#"+activeRuleOptions).before("<div class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div></div>");
 		event.stopPropagation();
 	};
 
