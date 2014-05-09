@@ -46,8 +46,33 @@ var PolicyEditor = function (options){
 		$(".options").hide();
 	};
 
+	var buildPost = function(){
+		var body = [];
+		$(".rule").each(function(i, arule){
+			var ruleId = $(arule).attr('data-id');
+			// rule heeft maar 1 antec/conseq
+			var antecedentId = $(arule).children('.if').attr('data-id');
+			var consequent = $(arule).children('.then');
+			var consequentId = consequent.attr('data-id');
+			var sequence = [];
+			consequent.children('.vac shot').each(function(j, shot){
+				sequence.push($(shot).attr('data-id'));
+			});
+			body.push({id: ruleId, antecedentId: antecedentId, consequentId: {id: consequentId, sequence: sequence}});
+		});
+		return body;
+	}
+
+	var postRules = function(){
+		var body = buildPost();
+		$.post('/rules', {rules: body}, function(data){
+			console.log(data);
+		});
+	}
+
 	return {
-		init: init
+		init: init,
+		postRules: postRules
 	};
 };
 
@@ -56,4 +81,5 @@ var PolicyEditor = function (options){
 $(function(){
 	var app = new PolicyEditor();
 	app.init();
+	app.postRules();
 });
