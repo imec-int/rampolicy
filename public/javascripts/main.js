@@ -55,7 +55,7 @@ var PolicyEditor = function (options){
 			var consequent = $(arule).children('.then');
 			var consequentId = consequent.attr('data-id');
 			var sequence = [];
-			consequent.children('.vac shot').each(function(j, shot){
+			consequent.children('.vac.shot').each(function(j, shot){
 				sequence.push($(shot).attr('data-id'));
 			});
 			body.push({id: ruleId, antecedentId: antecedentId, consequentId: {id: consequentId, sequence: sequence}});
