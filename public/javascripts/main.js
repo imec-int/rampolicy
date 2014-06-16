@@ -98,14 +98,17 @@ var PolicyEditor = function (options){
 		$(".rule").each(function(i, arule){
 			var ruleId = $(arule).attr('data-id');
 			// rule heeft maar 1 antec/conseq
-			var antecedentId = $(arule).find('.if').attr('data-id');
+			// volgende niet meer nodig??
+			// var antecedentId = $(arule).find('.if').attr('data-id');
 			var consequent = $(arule).find('.then');
-			var consequentId = consequent.attr('data-id');
+			// volgende ook niet meer nodig??
+			// var consequentId = consequent.attr('data-id');
 			var sequence = [];
 			consequent.find('.vac.shot').each(function(j, shot){
 				sequence.push($(shot).attr('data-id'));
 			});
-			body.push({id: ruleId, antecedentId: antecedentId, consequentId: {id: consequentId, sequence: sequence}});
+			body.push({id: ruleId, /*antecedentId: antecedentId, consequentId: {id: consequentId, */ subRules: sequence});
+			// TODO: Add priority, randomness, timing
 		});
 		return body;
 	}

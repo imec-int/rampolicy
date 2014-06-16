@@ -43,6 +43,17 @@ function transformRules (sampleRules){
 	return transformedRules;
 }
 
+function postRules (rules, callback){
+	httpreq.post(serverUrl, {json: rules}, function (err, res){
+		if(err) {
+			return callback(err);
+		}
+		// body is empty so return HTTP status code
+		callback(null, res.statusCode);
+
+	});
+}
+
 
 
 /* GET home page. */
@@ -56,10 +67,13 @@ router.get('/', function(req, res) {
 	});
 });
 
-router.post('/rules', function(req, res){
-	console.log(JSON.stringify(req.body));
-	res.json({status: 0});
-})
+router.post('/rules', function (req, res){
+	postRules(req.body, function (err, result){
+		if(err) return res.json({status: err});
+		// for now just return HTTP status code (body is empty)
+		res.json({status: result});
+	});
+});
 
 module.exports = router;
 
@@ -90,6 +104,13 @@ module.exports = router;
 		"ConsequentID": "{"ID":"concequentID>","Sequence":["<SubConcequenceID>"]}"  // subconsequenceID = ShotId
 	}]
 }
+
+{"rules": [{
+"id": "ruleID1", "subRules":["subRule2","subRule1"],
+"priority":"..",
+"randomness":"..",
+"timing":".."
+}]}
 
 //example
 {
