@@ -1,4 +1,5 @@
 RAMPOLICY
 ===========
 
-tegenwoordig express app starten met `$ bin/www`
+tegenwoordig express app starten met `$ npm start'
+
