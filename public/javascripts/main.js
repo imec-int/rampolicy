@@ -15,7 +15,7 @@ var PolicyEditor = function (options){
 		$('.removeButton').click( onRemove );
 		$('.option').click( onAddOption );
 		$('body').click( onClearOptions );
-		//sortable
+		//sortables
 		$(".shots").sortable(
 			{
 			// set item relative to cursor position
@@ -34,21 +34,52 @@ var PolicyEditor = function (options){
 				$item.css({
 				  left: position.left - adjustment.left,
 				  top: position.top - adjustment.top
-				})
+				});
+			},
+
+			isValidTarget: function (item, container) {
+				return item.parent("ul")[0] == container.el[0];
+			}
+
+		});
+
+		$(".rules").sortable(
+			{
+			// set item relative to cursor position
+			onDragStart: function ($item, container, _super) {
+				var offset = $item.offset(),
+				pointer = container.rootGroup.pointer
+
+				adjustment = {
+				  left: pointer.left - offset.left,
+				  top: pointer.top - offset.top
 				}
-			});
+
+				_super($item, container)
+			},
+			onDrag: function ($item, position) {
+				$item.css({
+				  left: position.left - adjustment.left,
+				  top: position.top - adjustment.top
+				});
+			},
+			isValidTarget: function (item, container) {
+				return item.parent("ol")[0] == container.el[0];
+			}
+		});
 	};
 
 	var onPlus = function (event){
 		event.preventDefault();
 		activeRuleOptions = $(this).attr('id');
-		var rule_number = $(this).attr('data-i');
-		activeRuleNumber = $(this).attr('data-i');
+		var rule_number = $(".rule").index($(this).closest(".rule"));
+		console.log(rule_number);
+		activeRuleNumber = rule_number;
 
 		// console.log(".options[data-i="+rule_number+"]");
 		//show options
 		$(".options").hide({duration:200 });
-		$(".options[data-i="+rule_number+"]").show({duration:300 });
+		$(".options:eq(" + activeRuleNumber +")").show({duration:300 });
 		event.stopPropagation();
 	};
 
@@ -60,7 +91,7 @@ var PolicyEditor = function (options){
 		var options = allRules[activeRuleNumber].consequent.options;
 		console.log(".rule[data-i="+activeRuleNumber+"] shots");
 		// $("#"+activeRuleOptions).before("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div></li>");
-		$(".rule[data-i="+activeRuleNumber+"] .shots").append("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div><a class='removeButton'><span class='glyphicon glyphicon-remove'></span></a></li>");
+		$(".rule:eq(" + activeRuleNumber + ") .shots").append("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div><a class='removeButton'><span class='glyphicon glyphicon-remove'></span></a></li>");
 		$('.removeButton').click( onRemove );
 		event.stopPropagation();
 	};

@@ -136,6 +136,8 @@ a {
 
 .options{
 	height: 100px;
+	background-color: white;
+	margin-right: 2%;
 }
 
 .option{
@@ -173,12 +175,12 @@ body.dragging, body.dragging * {
   opacity: 0.5;
   z-index: 2000;
 }
-ul.shots li.placeholder {
+ul.shots > li.placeholder {
   position: relative;
   /** More li styles **/
 }
-ul.shots li.placeholder:before {
- 	content: "";
+ul.shots > li.placeholder:before {
+	content: "";
 	position: absolute;
 	width: 0;
 	height: 0;
@@ -188,4 +190,59 @@ ul.shots li.placeholder:before {
 	margin-left: -5px;
 	border-bottom: none;
 }
+
+ol {
+	counter-reset:li; /* Initiate a counter */
+	margin-left:0; /* Remove the default left margin */
+	padding-left:0; /* Remove the default left padding */
+}
+ol > li.rule {
+	position:relative; /* Create a positioning context */
+	margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
+	padding:4px 8px; /* Add some spacing around the content */
+	list-style:none; /* Disable the normal item numbering */
+	/*border-top:2px solid #666;*/
+	background:#f6f6f6;
+}
+ol > li.rule:before {
+	content:counter(li); /* Use the counter as content */
+	counter-increment:li; /* Increment the counter by 1 */
+	/* Position and style the number */
+	position:absolute;
+	top: 0px;
+	bottom: 0px;
+	left:-2em;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+	width:2em;
+	/* Some space between the number and the content in browsers that support
+	   generated content but not positioning it (Camino 2 is one example) */
+	margin-right:8px;
+	padding:4px;
+	border-top:50px solid #95A5A6;
+	color:#fff;
+	background:#95A5A6;
+	text-align:center;
+}
+
+ol.rules > li.placeholder {
+  position: relative;
+  padding: 0px 0px;
+  margin-left: -15px;
+
+  /** More li styles **/
+}
+ol.rules > li.placeholder:before {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	border: 6px solid transparent;
+	border-left-color: #9AD2FA;
+	left: 4px;
+	border-right: none;
+}
+
+
 
