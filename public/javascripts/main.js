@@ -89,7 +89,7 @@ var PolicyEditor = function (options){
 		// console.log("click on "+activeRuleOptions);
 
 		var options = allRules[activeRuleNumber].consequent.options;
-		console.log(".rule[data-i="+activeRuleNumber+"] shots");
+		// console.log(".rule[data-i="+activeRuleNumber+"] shots");
 		// $("#"+activeRuleOptions).before("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div></li>");
 		$(".rule:eq(" + activeRuleNumber + ") .shots").append("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div><a class='removeButton'><span class='glyphicon glyphicon-remove'></span></a></li>");
 		$('.removeButton').click( onRemove );
@@ -138,7 +138,7 @@ var PolicyEditor = function (options){
 			consequent.find('.vac.shot').each(function(j, shot){
 				sequence.push($(shot).attr('data-id'));
 			});
-			body.push({id: ruleId, /*antecedentId: antecedentId, consequentId: {id: consequentId, */ subRules: sequence});
+			body.push({id: ruleId, /*antecedentId: antecedentId, consequentId: {id: consequentId, */ subRules: sequence, priority: i+1});
 			// TODO: Add priority, randomness, timing
 		});
 		return body;
