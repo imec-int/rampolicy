@@ -3,6 +3,9 @@ var router = express.Router();
 var serverUrl = require('../config').serverUrl;
 var httpreq = require('httpreq');
 
+// keep track of latest rule config, so we can show the current configuration to the user
+// this should normally also be returned by ibcn server, so this is bit of a hack
+var currentRulesConfig = [];
 
 function getRules (callback){
 	httpreq.get(serverUrl, function (err, res){
@@ -30,12 +33,18 @@ function transformRules (sampleRules){
 				id: rules[i].id,
 				antecedent: {id: rules[i].antecedent.id, description: rules[i].antecedent.description},
 				consequent: {id: rules[i].consequent.id, description: rules[i].consequent.description},
+				//this should also come from ibcn server?
+				priority: i + 1,
+				randomness: 0.0,
+				timing: 0.0
 			};
 			var options = [];
 			for (var j = rules[i].consequent.turtle.length - 1; j >= 0; j--) {
 				options.unshift({id: rules[i].consequent.turtle[j].id, description: rules[i].consequent.turtle[j].description});
 			};
 			rule.consequent.options = options;
+			// put the ones we'll show aka the currently picked/configured shots (in this case the first option) also in this stuff
+			rule.consequent.subRules = [options[0]];
 			transformedRules.unshift(rule);
 		};
 
@@ -54,15 +63,73 @@ function postRules (rules, callback){
 	});
 }
 
+function setCurrentRulesConfig (postedRules, callback) {
+// 	{"rules": [{
+// "id": "ruleID1", "subRules":["subRule2","subRule1"],
+// "priority":"..",
+// "randomness":"..",
+// "timing":".."
+// }]}
+	// get all rules from ibcn server for descriptions etc...
+	currentRulesConfig = [];
+	getRules(function(err, rules){
+		if(err){
+			return callback(err);
+		}
+		var transformedRules = transformRules(rules);
+
+		// if rules were added/deleted on ibcn server reset our config
+		if(transformedRules.length != postedRules.rules.length){
+			console.log('resetting config');
+			currentRulesConfig = transformRules;
+			return callback(null, currentRulesConfig);
+		}
+		for (var i = postedRules.rules.length - 1; i >= 0; i--) {
+			for (var j = transformedRules.length - 1; j >= 0; j--) {
+				if(transformedRules[j].id == postedRules.rules[i].id){
+					// remove from array with splice, so less elements to loop over
+					var rule = transformedRules.splice(j, 1)[0];
+					console.log(rule);
+					// copy new fields from posted stuff
+					rule.priority = postedRules.rules[i].priority;
+					rule.randomness = postedRules.rules[i].randomness;
+					rule.timing = postedRules.rules[i].timing;
+					// set currently picked/configured shots
+					rule.consequent.subRules = [];
+					for(var l = postedRules.rules[i].subRules.length -1; l >= 0; l--) {
+						for(var k = rule.consequent.options.length - 1; k >= 0; k--) {
+							if(postedRules.rules[i].subRules[l] == rule.consequent.options[k].id){
+								rule.consequent.subRules.unshift(rule.consequent.options[k]);
+								break;
+							}
+						}
+					}
+					currentRulesConfig.unshift(rule);
+				}
+			};
+		};
+		return callback(null, currentRulesConfig);
+	});
+}
+
+function getCurrentRulesConfig(callback){
+	if(currentRulesConfig.length == 0)
+		getRules(function(err, rules){
+			console.log('no rules yet');
+			console.log(rules);
+			if(err) return callback(err);
+			else return callback(null, transformRules(rules));
+		});
+	else return callback(null, currentRulesConfig);
+}
 
 
 /* GET home page. */
 router.get('/', function(req, res) {
-	getRules(function(err, rules){
-		if(err) res.send(500, { error: 'problem getting rules from intec server'});
+	getCurrentRulesConfig(function(err, rules){
+		if(err) res.send(500, { error: 'problem getting rules'});
 		else{
-			transformedRules = transformRules(rules);
-			res.render('index', { title: 'Policy Editor' , rules: JSON.stringify(transformedRules)});
+			res.render('index', { title: 'Policy Editor' , rules: JSON.stringify(rules)});
 		}
 	});
 });
@@ -70,82 +137,12 @@ router.get('/', function(req, res) {
 router.post('/rules', function (req, res){
 	postRules(req.body, function (err, result){
 		if(err) return res.json({status: err});
-		// for now just return HTTP status code (body is empty)
-		res.json({status: result});
+		setCurrentRulesConfig(req.body, function(error){
+			if(error) return res.json({status: error});
+			// for now just return HTTP status code (body is empty)
+			res.json({status: result});
+		});
 	});
 });
 
 module.exports = router;
-
-
-/*
-
-//OUTPUT{
-	"rules": [{
-		"ID": "<ruleID>",
-		"description": "<description>",
-		"Antecedent": {
-			"ID": "<antecedentID>",
-			"turtle": "<antecedentTurtle>",
-			"description": "<description>",
-
-		},
-		"Consequent": {
-			"ID": "<consequentID>",
-			"turtle": [{"ID":"<ShotID>","SubConsequent":"<turtle>"}],
-			"description": "<description>"
-		}
-	}]
-}
-//INPUT{
-	"rules": [{
-		"ID": "<ruleID>",
-		"AntecedentID": "<antecedentID>",
-		"ConsequentID": "{"ID":"concequentID>","Sequence":["<SubConcequenceID>"]}"  // subconsequenceID = ShotId
-	}]
-}
-
-{"rules": [{
-"id": "ruleID1", "subRules":["subRule2","subRule1"],
-"priority":"..",
-"randomness":"..",
-"timing":".."
-}]}
-
-//example
-{
-MeetingUser(?user), seatOf(?seat, ?seatNode), unitState(?mic, On), sittingOn(?user, ?seat), unit(?seatNode, ?mic), onSeat(?user, false) -> Show(?user)
-	"rules": [
-		{
-			"Antecedent": {
-				"description": "<description>",
-				"Id": "1",
-				"turtle": televic:MeetingUser(?<urn:swrl#user>), televic:seatOf(?<urn:swrl#seat>,?<urn:swrl#seatNode>),televic:unitState(?<urn:swrl#mic>,televic:On),televic:sittingOn(?<urn:swrl#user>,?<urn:swrl#seat>),televic:unit(?<urn:swrl#seatNode>,?<urn:swrl#mic>)"
-			},
-			"description": "User is speaking",
-			"ID": "1",
-			"Consequent": {
-				"id": "1",
-				"description": "<description>",
-				"turtle": [{"ID":"<ShotID>","SubConsequent":"televic:ShowNationality(?<urn:swrl#user>)"}, {"ID":"<ShotID2>", "SubConsequent":"televic:ShowSpeaker(?<urn:swrl#user>)"}]
-			}
-		},
-		{
-			"Antecedent": {
-				"description": "<description>",
-				"ID": "<antecedentID>",
-				"turtle": "televic:Meeting(?<urn:swrl#meeting>), televic:MeetingUser(?<urn:swrl#user>), televic:attendant(?<urn:swrl#meeting>, ?<urn:swrl#user>), ns:hasAddress(?<urn:swrl#meeting>, ?<urn:swrl#adres>), ns:hasAddress(?<urn:swrl#user>, ?<urn:swrl#adres>)"
-			},
-			"description": "<Meeting and user have the same location>",
-			"ID": "2",
-			"Consequent": {
-				"description": "<description>",
-				"ID": "<concequentID>",
-				"turtle": [{"ID":"<ShotID>","SubConsequent":"televic:ShowNationality(?<urn:swrl#user>)"},{"ID":"<ShotID2>", "SubConsequent":"televic:ShowSpeaker(?<urn:swrl#user>)"}]
-			}
-		}
-	]
-
-}
-
-*/

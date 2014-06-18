@@ -24,10 +24,12 @@
 				</div>
 				<div class="then" data-id="<%= myrules[i].consequent.id %>">
 					<ul class="shots">
-						<li class="vac shot" data-id="<%= myrules[i].consequent.options[0].id %>">
-							<div><%= myrules[i].consequent.options[0].description %></div>
-							<a class="removeButton"><span class="glyphicon glyphicon-remove"></span></a>
-						</li>
+						<% for(var j = 0; j < myrules[i].consequent.subRules.length; j++) { %>
+							<li class="vac shot" data-id="<%= myrules[i].consequent.subRules[j].id %>">
+								<div><%= myrules[i].consequent.subRules[j].description %></div>
+								<a class="removeButton"><span class="glyphicon glyphicon-remove"></span></a>
+							</li>
+						<% } %>
 					</ul>
 					<div id="plus_<%= i %>" class="plusButton"><span class="glyphicon glyphicon-plus"></span></div>
 				</div>
