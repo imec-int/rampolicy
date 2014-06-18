@@ -3,7 +3,7 @@ var router = express.Router();
 var serverUrl = require('../config').serverUrl;
 var httpreq = require('httpreq');
 
-// keep track of latest rule config, so we can show the current configuration to the user
+// keep track of latest rule config in following variable, so we can show the current configuration to the user
 // this should normally also be returned by ibcn server, so this is bit of a hack
 var currentRulesConfig = [];
 
