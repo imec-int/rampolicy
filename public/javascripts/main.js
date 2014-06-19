@@ -177,7 +177,10 @@ var PolicyEditor = function (options){
 			consequent.find('.vac.shot').each(function(j, shot){
 				sequence.push($(shot).attr('data-id'));
 			});
-			body.push({id: ruleId, /*antecedentId: antecedentId, consequentId: {id: consequentId, */ subRules: sequence, priority: i+1});
+			// timing
+			var timing = $(arule).find(".timing input")[0].value;
+
+			body.push({id: ruleId, /*antecedentId: antecedentId, consequentId: {id: consequentId, */ subRules: sequence, priority: i+1, timing: timing, randomness: 0});
 			// TODO: Add priority, randomness, timing
 		});
 		return body;
