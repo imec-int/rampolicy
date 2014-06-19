@@ -13,6 +13,9 @@ var PolicyEditor = function (options){
 		$('.plusButton').click( onPlus );
 		$('.syncButton').click( onSync );
 		$('.removeButton').click( onRemove );
+		$('.timing .minButton').click( onTimeMin );
+		$('.timing .plButton').click( onTimePlus );
+		$('.timing input').change( onTimeType );
 		$('.option').click( onAddOption );
 		$('body').click( onClearOptions );
 		//sortables
@@ -101,6 +104,42 @@ var PolicyEditor = function (options){
 		// console.log($(this).parent().remove());
 		$(this).parent().remove();
 		event.stopPropagation();
+	};
+
+	var onTimeMin = function (event){
+		event.preventDefault();
+		// console.log($(this).parent().find("input"));
+		var timeInput = $(this).parent().find("input")[0];
+		timeInput.value = Math.max(parseInt(timeInput.value)-5,0);
+		syncTimeBetweenShotsInRule(timeInput.value, $(this).closest(".rule").attr("data-id"));
+		event.stopPropagation();
+	};
+
+	var onTimePlus = function (event){
+		event.preventDefault();
+		// console.log($(this).closest(".rule").attr("data-id"));
+		var timeInput = $(this).parent().find("input")[0];
+		timeInput.value = Math.min(parseInt(timeInput.value)+5,360);
+		syncTimeBetweenShotsInRule(timeInput.value, $(this).closest(".rule").attr("data-id"));
+		event.stopPropagation();
+	};
+
+	var onTimeType = function (event){
+		event.preventDefault();
+		console.log("say what!");
+		var timeInput = $(this);
+		syncTimeBetweenShotsInRule(timeInput.value, $(this).closest(".rule").attr("data-id"));
+		event.stopPropagation();
+	};
+
+	var syncTimeBetweenShotsInRule = function (tValue, ruleId){
+		event.preventDefault();
+		var timings = $(".rule[data-id='"+ ruleId + "']").find(".shots .shot .timing input");
+		// console.log(timings);
+		for (var i = 0; i < timings.length; i++) {
+			timings[i].value = tValue;
+		};
+
 	};
 
 	var onClearOptions = function (event){

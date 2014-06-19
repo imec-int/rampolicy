@@ -28,6 +28,12 @@
 							<li class="vac shot" data-id="<%= myrules[i].consequent.subRules[j].id %>">
 								<div><%= myrules[i].consequent.subRules[j].description %></div>
 								<a class="removeButton"><span class="glyphicon glyphicon-remove"></span></a>
+								<div class="timing">
+									<a class="minButton"><span class="glyphicon glyphicon-minus"></span></a>
+									<span class="glyphicon glyphicon-time"></span>
+									<input type="text" value="10">
+									<a class="plButton"><span class="glyphicon glyphicon-plus"></span></a>
+								</div>
 							</li>
 						<% } %>
 					</ul>

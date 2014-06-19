@@ -62,6 +62,80 @@ a {
 	color: #FFC5A3;
 }
 
+.timing{
+	cursor: pointer;
+	position: absolute;
+	bottom: 0px;
+	right: auto;
+	left: 0;
+	color:  #FF9473;
+	background-color: rgb(57, 85, 109);
+	height: 20px;
+}
+.timing span{
+	font-size: 17px;
+	line-height: 20px;
+	text-align: center;
+	color: white;
+}
+
+.timing:hover{
+	color: #FFC5A3;
+}
+
+.timing input{
+	width: 28%;
+	display: inline;
+	color: white;
+	height: 100%;
+	line-height: 25px;
+	font-size: 14px;
+	text-align: right;
+	background-color: rgb(57, 85, 109);
+}
+
+.timing .minButton{
+	cursor: pointer;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	color:  #FF9473;
+	background-color: #2C3E50;
+	text-align: center;
+	padding-right: 2px;
+}
+.timing .minButton span{
+	width: 20px;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: center;
+}
+
+.timing .minButton span:hover{
+	color: #FF9473;
+}
+
+.timing .plButton{
+	cursor: pointer;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	color:  #FF9473;
+	background-color: #2C3E50;
+	text-align: center;
+	padding-left: 1px;
+}
+.timing .plButton span{
+	width: 20px;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: center;
+}
+
+.timing .plButton span:hover{
+	color: #FF9473;
+}
+
 .syncButton{
 	height: 36px;
 	background-color: #BDC3C7;
@@ -124,7 +198,7 @@ a {
 }
 
 .shot{
-	height: 80px;
+	height: 100px;
 	width: 100px;
 	background-color: #2C3E50;
 	margin: 10px;
