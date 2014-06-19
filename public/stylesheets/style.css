@@ -126,12 +126,35 @@ a {
 .shot{
 	height: 80px;
 	width: 100px;
-	background-color: #2C3E50;
 	margin: 10px;
 	float: left;
 	font-size: 12px;
 	color: #fff;
 	position: relative;
+}
+
+.shot, .option{
+	position: relative;
+	text-shadow: 1px 1px #000000;
+	border: 1px solid #2C3E50;
+}
+
+.shot .backgroundimage, .option .backgroundimage{
+	background-size: cover;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+}
+
+.shot .description, .option .description{
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	height: 30px;
+	bottom: 0px;
+	background: rgba(44, 62, 80, 0.8);
 }
 
 .options{

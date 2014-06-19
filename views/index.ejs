@@ -26,7 +26,8 @@
 					<ul class="shots">
 						<% for(var j = 0; j < myrules[i].consequent.subRules.length; j++) { %>
 							<li class="vac shot" data-id="<%= myrules[i].consequent.subRules[j].id %>">
-								<div><%= myrules[i].consequent.subRules[j].description %></div>
+								<div class="backgroundimage" style='background-image:url("/images/<%= myrules[i].consequent.subRules[j].description %>.jpg")'></div>
+								<div class="description"><%= myrules[i].consequent.subRules[j].description %></div>
 								<a class="removeButton"><span class="glyphicon glyphicon-remove"></span></a>
 							</li>
 						<% } %>
@@ -36,7 +37,8 @@
 				<div class="options" >
 					<% for(var j = 0; j < myrules[i].consequent.options.length; j++) { %>
 					<div class="vac option" data-j="<%= j %>">
-						<div><%= myrules[i].consequent.options[j].description %></div>
+						<div class="backgroundimage" style='background-image:url("/images/<%= myrules[i].consequent.options[j].description %>.jpg")'></div>
+						<div class="description"><%= myrules[i].consequent.options[j].description %></div>
 					</div>
 					<% } %>
 				</div>
