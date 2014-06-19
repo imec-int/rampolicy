@@ -157,6 +157,7 @@ var PolicyEditor = function (options){
 	var onTimeType = function (event){
 		event.preventDefault();
 		var timeInput = $(this)[0];
+		timeInput.value = Math.max(0,Math.min(timeInput.value,360));
 		// console.log(timeInput);
 		syncTimeBetweenShotsInRule(timeInput.value, $(this).closest(".rule").attr("data-id"));
 		event.stopPropagation();
@@ -192,6 +193,15 @@ var PolicyEditor = function (options){
 		event.preventDefault();
 	};
 
+	var onRandomType = function (event){
+		event.preventDefault();
+		var rndInput = $(this);
+		rndInput[0].value = Math.max(0,Math.min(rndInput[0].value,100));
+		// console.log(rndInput.parent().find(".randomSlider").val());
+		rndInput.parent().find(".randomSlider").val(100 - rndInput[0].value);
+		event.stopPropagation();
+	};
+
 	var resetSync = function(event){
 		console.log("reset sync");
 		TweenLite.to($(".syncButton .glyphicon"), 0, {rotation:0});
@@ -214,8 +224,9 @@ var PolicyEditor = function (options){
 			});
 			// timing
 			var timing = $(arule).find(".timing input")[0].value;
-
-			body.push({id: ruleId, /*antecedentId: antecedentId, consequentId: {id: consequentId, */ subRules: sequence, priority: i+1, timing: timing, randomness: 0});
+			//randomness
+			var randomness = $(arule).find(".randomness input")[0].value;
+			body.push({id: ruleId, /*antecedentId: antecedentId, consequentId: {id: consequentId, */ subRules: sequence, priority: i+1, timing: timing, randomness: randomness});
 			// TODO: Add priority, randomness, timing
 		});
 		return body;
