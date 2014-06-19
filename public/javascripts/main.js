@@ -16,6 +16,7 @@ var PolicyEditor = function (options){
 		$('.timing .minButton').click( onTimeMin );
 		$('.timing .plButton').click( onTimePlus );
 		$('.timing input').change( onTimeType );
+		$('.randomness input').change( onRandomType );
 		$('.option').click( onAddOption );
 		$('body').click( onClearOptions );
 		//sortables
@@ -70,6 +71,25 @@ var PolicyEditor = function (options){
 				return item.parent("ol")[0] == container.el[0];
 			}
 		});
+		// randomness array
+		// var randomness
+		// console.log($(".randomness .randomSlider[data-start]"));
+		$(".randomness .randomSlider").noUiSlider({
+			start: 0 ,
+			connect: "upper",
+			step: 10,
+			range: {
+				'min': 0,
+				'max': 100
+			},
+			orientation: 'vertical'
+		}).on('slide', onSlide).each(function(index){
+			// console.log(index);
+			// console.log($(this).attr("data-start"));
+			$(this).val(100 - $(this).attr("data-start"));
+		});
+		// sync randomness values with slider
+
 	};
 
 	var onPlus = function (event){
@@ -165,6 +185,11 @@ var PolicyEditor = function (options){
 		$('.syncButton').off("click");
 		postRules();
 		TweenLite.to($(".syncButton .glyphicon"), 1.8, {rotation:720, ease:Elastic.easeOut, onComplete:resetSync});
+	};
+
+	var onSlide = function(event){
+		$(this).parent().find("input")[0].value = 100 - parseInt($(this).val());
+		event.preventDefault();
 	};
 
 	var resetSync = function(event){

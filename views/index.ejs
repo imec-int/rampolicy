@@ -38,6 +38,11 @@
 						<% } %>
 					</ul>
 					<div id="plus_<%= i %>" class="plusButton"><span class="glyphicon glyphicon-plus"></span></div>
+					<div class="randomness">
+						<span class="glyphicon glyphicon-random"></span>
+						<input type="text" value="<%= myrules[i].randomness %>">
+						<div class="randomSlider" data-start="<%= myrules[i].randomness %>"></div>
+					</div>
 				</div>
 				<div class="options" >
 					<% for(var j = 0; j < myrules[i].consequent.options.length; j++) { %>
@@ -58,6 +63,8 @@
 	<script src="vendor/fastclick.js"></script>
 	<script src="vendor/jquery-1.11.0.min.js"></script>
 	<script src="vendor/jquery-sortable-min.js"></script>
+	<script src="vendor/jquery.nouislider.min.js"></script>
+	<link rel='stylesheet' href='vendor/jquery.nouislider.css' />
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="vendor/gsap/TweenLite.min.js"></script>
 	<script src="vendor/gsap/easing/EasePack.min.js"></script>

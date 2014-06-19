@@ -136,6 +136,35 @@ a {
 	color: #FF9473;
 }
 
+.randomness{
+	position: absolute;
+	height: 100%;
+	right: 10px;
+	border-left: 1px white solid;
+	padding-left: 16px;
+}
+
+.randomness span{
+	/*position: absolute;
+	top: 6px*/;
+	margin-top: 6px;
+}
+
+.randomness input{
+	width: 27px;
+	background-color: #95A5A6;
+	color: #2C3E50;
+	font-weight: bold;
+	text-align: right
+}
+
+.randomSlider{
+	position: absolute;
+	height: 70%;
+	top: 30px;
+	right: 16px;
+}
+
 .syncButton{
 	height: 36px;
 	background-color: #BDC3C7;
@@ -194,7 +223,7 @@ a {
 	display: inline-block;
 	width: 78%;
 	margin-right: 2%;
-	overflow-x: scroll;
+	overflow-x: none;
 }
 
 .shot{
