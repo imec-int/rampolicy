@@ -126,8 +126,8 @@ var PolicyEditor = function (options){
 
 	var onTimeType = function (event){
 		event.preventDefault();
-		console.log("say what!");
-		var timeInput = $(this);
+		var timeInput = $(this)[0];
+		// console.log(timeInput);
 		syncTimeBetweenShotsInRule(timeInput.value, $(this).closest(".rule").attr("data-id"));
 		event.stopPropagation();
 	};

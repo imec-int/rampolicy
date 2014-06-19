@@ -116,7 +116,7 @@ function getCurrentRulesConfig(callback){
 	if(currentRulesConfig.length == 0)
 		getRules(function(err, rules){
 			console.log('no rules yet');
-			console.log(rules);
+			// console.log(rules);
 			if(err) return callback(err);
 			else return callback(null, transformRules(rules));
 		});
@@ -129,6 +129,7 @@ router.get('/', function(req, res) {
 	getCurrentRulesConfig(function(err, rules){
 		if(err) res.send(500, { error: 'problem getting rules'});
 		else{
+			console.log(rules);
 			res.render('index', { title: 'Policy Editor' , rules: JSON.stringify(rules)});
 		}
 	});
