@@ -94,7 +94,17 @@ var PolicyEditor = function (options){
 		var options = allRules[activeRuleNumber].consequent.options;
 		// console.log(".rule[data-i="+activeRuleNumber+"] shots");
 		// $("#"+activeRuleOptions).before("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div></li>");
-		$(".rule:eq(" + activeRuleNumber + ") .shots").append("<li class='vac shot' data-id='"+ options[option_number].id + "'><div>"+options[option_number].description+"</div><a class='removeButton'><span class='glyphicon glyphicon-remove'></span></a></li>");
+		$(".rule:eq(" + activeRuleNumber + ") .shots").append("\
+			<li class='vac shot' data-id='"+ options[option_number].id + "'>\
+				<div>"+options[option_number].description+"</div>\
+				<a class='removeButton'><span class='glyphicon glyphicon-remove'></span></a>\
+				<div class='timing'>\
+					<a class='minButton'><span class='glyphicon glyphicon-minus'></span></a>\
+					<span class='glyphicon glyphicon-time'></span>\
+					<input type='text' value="+ allRules[activeRuleNumber].timing + ">\
+					<a class='plButton'><span class='glyphicon glyphicon-plus'></span></a>\
+				</div>\
+			</li>");
 		$('.removeButton').click( onRemove );
 		event.stopPropagation();
 	};
