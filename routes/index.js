@@ -81,7 +81,7 @@ function setCurrentRulesConfig (postedRules, callback) {
 		// if rules were added/deleted on ibcn server reset our config
 		if(transformedRules.length != postedRules.rules.length){
 			console.log('resetting config');
-			currentRulesConfig = transformRules;
+			currentRulesConfig = transformedRules;
 			return callback(null, currentRulesConfig);
 		}
 		for (var i = postedRules.rules.length - 1; i >= 0; i--) {
