@@ -1,1 +1,1 @@
-exports.serverUrl = 'http://ramp.intec.ugent.be:8080/ruleselector';
+exports.serverUrl = 'http://localhost:8080/ruleselector';
