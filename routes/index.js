@@ -60,15 +60,13 @@ function transformRules (sampleRules){
 	if(sampleRules && sampleRules.rules && sampleRules.rules.length > 0){
 		var rules = sampleRules.rules;
 		for (var i = rules.length - 1; i >= 0; i--) {
+			console.log(rules[i]);
 			var rule = {
 				description: rules[i].description,
 				id: rules[i].id,
 				antecedent: {id: rules[i].antecedent.id, description: rules[i].antecedent.description},
 				consequent: {id: rules[i].consequent.id, description: rules[i].consequent.description},
-				//this should also come from ibcn server?
-				priority: i + 1,
-				randomness: 0.0,
-				timing: 0.0
+			
 			};
 			// active rule is just merged into rule with options, so we don't have to change all the code
 			if(rules[i].activerule){
@@ -78,7 +76,8 @@ function transformRules (sampleRules){
 				rule.timing = activeRule.timing;
 			}
 			var options = [];
-
+			console.log("---RULE---")
+			console.log(rule);
 			// keep track of the mapping between ids and description in this turtle stuff, so we can reuse it later on
 			var subRuleMap = {};
 			for (var j = rules[i].consequent.turtle.length - 1; j >= 0; j--) {
@@ -95,8 +94,8 @@ function transformRules (sampleRules){
 			else{
 				rule.consequent.subRules = [];
 				var subRules = rules[i].activerule.subRules;
-				for (var i = subRules.length - 1; i >= 0; i--) {
-					rule.consequent.subRules.unshift({id: subRules[i], description: subRuleMap[subRules[i]]});
+				for (var k = subRules.length - 1; k >= 0; k--) {
+					rule.consequent.subRules.unshift({id: subRules[k], description: subRuleMap[subRules[k]]});
 				};
 
 			}
@@ -174,7 +173,6 @@ function getCurrentRulesConfig(callback){
 	// don't cache here since IBCN returns state as well
 	// if(currentRulesConfig.length == 0)
 		getRules(function(err, rules){
-			console.log('no rules yet');
 			// console.log(rules);
 			if(err) return callback(err);
 			else return callback(null, transformRules(rules));
