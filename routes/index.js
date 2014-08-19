@@ -52,6 +52,14 @@ function getRules (callback){
 // 	"description": "A commercial starts"
 // }
 
+function compareByPriority(a, b){
+	if(a.priority && b.priority){
+		if(a.priority < b.priority) return -1;
+		else return 1;
+	}
+	return 0;
+}
+
 function transformRules (sampleRules){
 	var transformedRules = [];
 	if(sampleRules && sampleRules.rules && sampleRules.rules.length > 0){
@@ -98,7 +106,7 @@ function transformRules (sampleRules){
 		};
 
 	}
-	return transformedRules;
+	return transformedRules.sort(compareByPriority);
 }
 
 function postRules (rules, callback){
