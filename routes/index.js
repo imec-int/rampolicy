@@ -3,9 +3,6 @@ var router = express.Router();
 var serverUrl = require('../config').serverUrl;
 var httpreq = require('httpreq');
 
-// keep track of latest rule config in following variable, so we can show the current configuration to the user
-// this should normally also be returned by ibcn server, so this is bit of a hack
-// var currentRulesConfig = [];
 
 function getRules (callback){
 	httpreq.get(serverUrl, function (err, res){
@@ -66,7 +63,7 @@ function transformRules (sampleRules){
 				id: rules[i].id,
 				antecedent: {id: rules[i].antecedent.id, description: rules[i].antecedent.description},
 				consequent: {id: rules[i].consequent.id, description: rules[i].consequent.description},
-			
+
 			};
 			// active rule is just merged into rule with options, so we don't have to change all the code
 			if(rules[i].activerule){
@@ -76,8 +73,6 @@ function transformRules (sampleRules){
 				rule.timing = activeRule.timing;
 			}
 			var options = [];
-			console.log("---RULE---")
-			console.log(rule);
 			// keep track of the mapping between ids and description in this turtle stuff, so we can reuse it later on
 			var subRuleMap = {};
 			for (var j = rules[i].consequent.turtle.length - 1; j >= 0; j--) {
@@ -118,66 +113,11 @@ function postRules (rules, callback){
 }
 
 
-// temporary function to keep track of state, since IBCN didn't do this...
-
-// function setCurrentRulesConfig (postedRules, callback) {
-// // 	{"rules": [{
-// // "id": "ruleID1", "subRules":["subRule2","subRule1"],
-// // "priority":"..",
-// // "randomness":"..",
-// // "timing":".."
-// // }]}
-// 	// get all rules from ibcn server for descriptions etc...
-// 	currentRulesConfig = [];
-// 	getRules(function(err, rules){
-// 		if(err){
-// 			return callback(err);
-// 		}
-// 		var transformedRules = transformRules(rules);
-
-// 		// if rules were added/deleted on ibcn server reset our config
-// 		if(transformedRules.length != postedRules.rules.length){
-// 			console.log('resetting config');
-// 			currentRulesConfig = transformedRules;
-// 			return callback(null, currentRulesConfig);
-// 		}
-// 		for (var i = postedRules.rules.length - 1; i >= 0; i--) {
-// 			for (var j = transformedRules.length - 1; j >= 0; j--) {
-// 				if(transformedRules[j].id == postedRules.rules[i].id){
-// 					// remove from array with splice, so less elements to loop over
-// 					var rule = transformedRules.splice(j, 1)[0];
-// 					console.log(rule);
-// 					// copy new fields from posted stuff
-// 					rule.priority = postedRules.rules[i].priority;
-// 					rule.randomness = postedRules.rules[i].randomness;
-// 					rule.timing = postedRules.rules[i].timing;
-// 					// set currently picked/configured shots
-// 					rule.consequent.subRules = [];
-// 					for(var l = postedRules.rules[i].subRules.length -1; l >= 0; l--) {
-// 						for(var k = rule.consequent.options.length - 1; k >= 0; k--) {
-// 							if(postedRules.rules[i].subRules[l] == rule.consequent.options[k].id){
-// 								rule.consequent.subRules.unshift(rule.consequent.options[k]);
-// 								break;
-// 							}
-// 						}
-// 					}
-// 					currentRulesConfig.unshift(rule);
-// 				}
-// 			};
-// 		};
-// 		return callback(null, currentRulesConfig);
-// 	});
-// }
-
 function getCurrentRulesConfig(callback){
-	// don't cache here since IBCN returns state as well
-	// if(currentRulesConfig.length == 0)
-		getRules(function(err, rules){
-			// console.log(rules);
-			if(err) return callback(err);
-			else return callback(null, transformRules(rules));
-		});
-	// else return callback(null, currentRulesConfig);
+	getRules(function(err, rules){
+		if(err) return callback(err);
+		else return callback(null, transformRules(rules));
+	});
 }
 
 
@@ -186,7 +126,6 @@ router.get('/', function(req, res) {
 	getCurrentRulesConfig(function(err, rules){
 		if(err) res.send(500, { error: 'problem getting rules'});
 		else{
-			console.log(rules);
 			res.render('index', { title: 'Policy Editor' , rules: JSON.stringify(rules)});
 		}
 	});
@@ -195,11 +134,7 @@ router.get('/', function(req, res) {
 router.post('/rules', function (req, res){
 	postRules(req.body, function (err, result){
 		if(err) return res.json({status: err});
-		// setCurrentRulesConfig(req.body, function(error){
-		// 	if(error) return res.json({status: error});
-			// for now just return HTTP status code (body is empty)
-			res.json({status: result});
-		// });
+		res.json({status: result});
 	});
 });
 
