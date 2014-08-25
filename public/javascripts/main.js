@@ -20,57 +20,74 @@ var PolicyEditor = function (options){
 		$('.option').click( onAddOption );
 		$('body').click( onClearOptions );
 		//sortables
-		$(".shots").sortable(
+		// $(".shots").sortable(
+		// 	{
+		// 	// set item relative to cursor position
+		// 	onDragStart: function ($item, container, _super) {
+		// 		var offset = $item.offset(),
+		// 		pointer = container.rootGroup.pointer
+
+		// 		adjustment = {
+		// 		  left: pointer.left - offset.left,
+		// 		  top: pointer.top - offset.top
+		// 		}
+
+		// 		_super($item, container)
+		// 	},
+		// 	onDrag: function ($item, position) {
+		// 		$item.css({
+		// 		  left: position.left - adjustment.left,
+		// 		  top: position.top - adjustment.top
+		// 		});
+		// 	},
+
+		// 	isValidTarget: function (item, container) {
+		// 		return item.parent("ul")[0] == container.el[0];
+		// 	}
+
+		// });
+
+		new Sortable($(".rules")[0],
 			{
-			// set item relative to cursor position
-			onDragStart: function ($item, container, _super) {
-				var offset = $item.offset(),
-				pointer = container.rootGroup.pointer
-
-				adjustment = {
-				  left: pointer.left - offset.left,
-				  top: pointer.top - offset.top
-				}
-
-				_super($item, container)
-			},
-			onDrag: function ($item, position) {
-				$item.css({
-				  left: position.left - adjustment.left,
-				  top: position.top - adjustment.top
-				});
-			},
-
-			isValidTarget: function (item, container) {
-				return item.parent("ul")[0] == container.el[0];
+				group: 'rule'
 			}
+			);
 
+		$(".shots").each(function(index, element){
+			new Sortable(element,
+			{
+				group: 'shot'
+			}
+			);
 		});
 
-		$(".rules").sortable(
-			{
-			// set item relative to cursor position
-			onDragStart: function ($item, container, _super) {
-				var offset = $item.offset(),
-				pointer = container.rootGroup.pointer
 
-				adjustment = {
-				  left: pointer.left - offset.left,
-				  top: pointer.top - offset.top
-				}
+		// $(".rules").sortable(
+		// 	{
+		// 	containerSelector: "ol.rules",
+		// 	// set item relative to cursor position
+		// 	onDragStart: function ($item, container, _super) {
+		// 		var offset = $item.offset(),
+		// 		pointer = container.rootGroup.pointer
+		// 		console.log(pointer.top,offset.top);
+		// 		adjustment = {
+		// 		  left: 0,
+		// 		  top: 2000
+		// 		}
 
-				_super($item, container)
-			},
-			onDrag: function ($item, position) {
-				$item.css({
-				  left: position.left - adjustment.left,
-				  top: position.top - adjustment.top
-				});
-			},
-			isValidTarget: function (item, container) {
-				return item.parent("ol")[0] == container.el[0];
-			}
-		});
+		// 		_super($item, container)
+		// 	},
+		// 	onDrag: function ($item, position) {
+		// 		console.log(position);
+		// 		$item.css({
+		// 		  top: position.top
+		// 		});
+		// 	},
+		// 	isValidTarget: function (item, container) {
+		// 		//console.log(item.hasClass("rule"));
+		// 		return item.parent("ol")[0] == container.el[0];
+		// 	}
+		// });
 		// randomness array
 		// var randomness
 		// console.log($(".randomness .randomSlider[data-start]"));
@@ -100,9 +117,15 @@ var PolicyEditor = function (options){
 		activeRuleNumber = rule_number;
 
 		// console.log(".options[data-i="+rule_number+"]");
+
+		// if plus is clicked when options already open:
+		//		don't show/animate it again
+		var isAlreadyVisible = $(".options:eq(" + activeRuleNumber +")").css("display") == "block";
+
 		//show options
 		$(".options").hide({duration:200 });
-		$(".options:eq(" + activeRuleNumber +")").show({duration:300 });
+		if(!isAlreadyVisible)
+			$(".options:eq(" + activeRuleNumber +")").show({duration:300 });
 		event.stopPropagation();
 	};
 
