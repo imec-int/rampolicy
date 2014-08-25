@@ -77,7 +77,7 @@ function transformRules (sampleRules){
 			if(rules[i].activerule){
 				var activeRule = rules[i].activerule;
 				rule.priority = activeRule.priority;
-				rule.randomness = activeRule.randomness;
+				rule.randomness = activeRule.randomness * 100;
 				rule.timing = activeRule.timing;
 			}
 			var options = [];
@@ -140,6 +140,13 @@ router.get('/', function(req, res) {
 });
 
 router.post('/rules', function (req, res){
+	// transform numbers to ints and floats
+	var rules = req.body.rules;
+	for (var i = rules.length - 1; i >= 0; i--) {
+		rules[i].priority = parseInt(rules[i].priority);
+		rules[i].timing = parseInt(rules[i].timing);
+		rules[i].randomness = rules[i].randomness/100;
+	};
 	postRules(req.body, function (err, result){
 		if(err) return res.json({status: err});
 		res.json({status: result});
