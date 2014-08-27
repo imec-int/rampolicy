@@ -19,6 +19,7 @@ a {
 	background-color: #eee;
 	min-height: 120px;
 	margin-top: 20px;
+	cursor: move;
 }
 
 .plusButton{
@@ -235,6 +236,7 @@ a {
 	font-size: 12px;
 	color: #fff;
 	position: relative;
+	cursor: move;
 }
 
 .options{
