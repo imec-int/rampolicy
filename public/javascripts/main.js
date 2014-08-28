@@ -149,6 +149,9 @@ var PolicyEditor = function (options){
 				</div>\
 			</li>");
 		$('.removeButton').click( onRemove );
+		$('.timing .minButton').click( onTimeMin );
+		$('.timing .plButton').click( onTimePlus );
+		$('.timing input').change( onTimeType );
 		event.stopPropagation();
 	};
 
